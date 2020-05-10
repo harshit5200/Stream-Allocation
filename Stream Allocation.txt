@@ -1,0 +1,118 @@
+Create Database Stream;
+Use Stream;
+Create Table LogIn
+(UID Varchar(20),
+PWD Varchar(10));
+Insert into LogIN values
+("HarshitAwasthi","damon12345");
+
+Create Table Student
+(Roll_No Char(7),
+Name Varchar(20),
+Class Integer,
+Section Char,
+Science  Integer,
+SST Integer,
+Maths  Integer,
+English Integer,
+Hindi Integer,
+Total  Integer,
+Percentage Integer,
+Grade Char(2),
+PrefStream Varchar(10),
+AlloStream Varchar(10));
+
+
+
+LogIN Coding
+  
+import javax.swing.JOptionPane;
+import java.sql.*;
+
+
+Ok Button
+
+String LogIN = txtUID.getText();
+        String Password = new String(txtPWD.getPassword());
+        try
+        {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = (Connection)
+                    DriverManager.getConnection("jdbc:mysql://localhost:3306/stream","root","");
+            Statement stmt = con.createStatement();
+            String str = "Select* from LogIN";
+            ResultSet rs = stmt.executeQuery(str);
+            if(rs.next())
+            {
+                String mUID = rs.getString("UID");
+                String mPWD = rs.getString("PWD");
+                if(LogIN.equals(mUID)&&Password.equals(mPWD))
+                    JOptionPane.showMessageDialog(this,"Correct Password");
+                else JOptionPane.showMessageDialog(this,"Incorrect Password");
+            }
+
+        }
+        catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(this,e.getMessage());
+        }
+
+    }   
+
+
+
+
+Student  Coding  
+
+
+Save
+  
+String Roll_No = txtRno.getText();
+        String Name = txtName.getText();
+        int Cl = Integer.parseInt(txtClass.getText());
+        String Section = txtSec.getText();
+        int PM = Integer.parseInt(txtPM.getText());
+        int CM = Integer.parseInt(txtCM.getText());
+        int MM = Integer.parseInt(txtMM.getText());
+        int TotalMarks = Integer.parseInt(txtTM.getText());
+        int Percentage = Integer.parseInt(txtPer.getText());
+         String Grade = txtGrade.getText();
+         String PrefStream = txtPS.getText();
+         try
+         {
+             Class.forName("com.mysql.jdbc.Driver");
+             Connection con = (Connection)
+                     DriverManager.getConnection("jdbc:mysql://localhost:3306/Stream","root","");
+             Statement stmt = con.createStatement();
+             String str = "Insert into Student Values('"+Roll_No+"','"+Name+"',"+Cl+",'"+Section+"',"+PM+","+CM+","+MM+","+TotalMarks+","+Percentage+",'"+Grade+"','"+PrefStream+"')";
+             int r = stmt.executeUpdate(str);
+             JOptionPane.showMessageDialog(this,"RECORD ADDED");
+
+
+             
+         }
+         catch(Exception e)
+         {
+             JOptionPane.showMessageDialog(this,e.getMessage());
+         }
+
+    }                                        
+
+
+
+Calculate 
+ int PM = Integer.parseInt(txtPM.getText());
+        int CM = Integer.parseInt(txtCM.getText());
+        int MM = Integer.parseInt(txtMM.getText());
+        int TotalMarks = PM +CM +MM;
+        txtTM.setText("" + TotalMarks);
+        int Percentage = TotalMarks/3;
+        txtPer.setText("" + Percentage);
+        if (Percentage>=90)
+            txtGrade.setText("A");
+        else if(Percentage>=80)
+           txtGrade.setText("B");
+        else if (Percentage>=70)
+            txtGrade.setText("C");
+        else
+            txtGrade.setText("D");                              
